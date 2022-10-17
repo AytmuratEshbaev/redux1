@@ -1,24 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useSelector, useDispatch } from 'react-redux';
 import './App.css';
 
+
 function App() {
+  let status = useSelector((state: { status: string }) => state.status);
+  const dispatch = useDispatch();
+
+  const changeState = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
+    dispatch({ type: target.value })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="state__control">
+        <h2>Change State</h2>
+        <div>
+          <button onClick={changeState} value="LIQUID">Liquid</button>
+          <button onClick={changeState} value="GAS">Gas</button>
+          <button onClick={changeState} value="SOLID">Solid</button>
+        </div>
+      </div>
+      <div className="state__info">
+        <h1>H20 is feeling:</h1>
+        <p>{status}</p>
+      </div>
     </div>
   );
 }
